@@ -12,14 +12,14 @@ if (!isset($_COOKIE['username'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Halaman Utama</title>
+    <title>Pertemuan 11</title>
 </head>
 
 <body style="background:#1B262C">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card  border-0 rounded-0">
+                <div class="card border-0 rounded-0 mt-5">
                     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary rounded-0">
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav">

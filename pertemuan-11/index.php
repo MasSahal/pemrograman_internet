@@ -54,9 +54,8 @@ if (isset($_POST['submit'])) {
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <input type="password" name="password" id="password" class="form-control <?= isset($error) ? 'is-invalid' : ''; ?>" value="<?= $password; ?>" required>
+                                <small class="text-center text-danger"><?= isset($error) ? $error : '' ?></small>
                             </div>
-                            <small class="text-center text-danger"><?= isset($error) ? $error : '' ?></small>
-                            <br>
                             <div class="form-group">
                                 <button type="submit" name="submit" class="btn btn-info btn-block">Submit</button>
                             </div>
