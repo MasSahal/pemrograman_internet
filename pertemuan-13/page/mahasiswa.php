@@ -27,54 +27,55 @@ if (!isset($_SESSION['is_login'])) {
     <div class="container">
         <?php include("./navbar.php"); ?>
         <div class="card rounded-0 border-0">
-            <div class="container-fluid">
-                <div class="card-body">
-                    <h3 class="text-center my-3">Data Mahasiswa</h3>
-                    <?php
-                    if (isset($_GET['search'])) {
-                        $cari = $_GET['search'];
-                        $res = $mysqli->query("SELECT * FROM mahasiswa WHERE nama LIKE '%$cari%' OR nim LIKE '%$cari%' OR tempat_lahir LIKE '%$cari%' OR fakultas LIKE '%$cari%' OR jurusan LIKE '%$cari%' OR ipk LIKE '%$cari%'");
-                        if ($res) {
-                            $record = $res;
-                        } else {
-                            echo "<h4 class='text-center text-danger'>Data tidak ditemukan!</h4>";
-                        }
+            <div class="card-body">
+                <h3 class="text-center my-3">Data Mahasiswa</h3>
+                <?php
+                if (isset($_GET['search'])) {
+                    $cari = $_GET['search'];
+                    $res = $mysqli->query("SELECT * FROM mahasiswa WHERE nama LIKE '%$cari%' OR nim LIKE '%$cari%' OR tempat_lahir LIKE '%$cari%' OR fakultas LIKE '%$cari%' OR jurusan LIKE '%$cari%' OR ipk LIKE '%$cari%'");
+                    if ($res) {
+                        $record = $res;
                     } else {
-                        $record = $mysqli->query("SELECT * FROM mahasiswa");
+                        echo "<h4 class='text-center text-danger'>Data tidak ditemukan!</h4>";
                     }
+                } else {
+                    $record = $mysqli->query("SELECT * FROM mahasiswa");
+                }
 
-                    ?>
-                    <table class="table table-bordered table-hover">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>#</th>
-                                <th>NIM</th>
-                                <th>Nama</th>
-                                <th>Tempat Lahir</th>
-                                <th>Tanggal lahir</th>
-                                <th>Fakultas</th>
-                                <th>Jurusan</th>
-                                <th>IPK</th>
-                            </tr>
-                        </thead>
+                ?>
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>#</th>
+                            <th>NIM</th>
+                            <th>Nama</th>
+                            <th>Tempat Lahir</th>
+                            <th>Tanggal lahir</th>
+                            <th>Fakultas</th>
+                            <th>Jurusan</th>
+                            <th>IPK</th>
+                        </tr>
+                    </thead>
 
-                        <?php
-                        $no = 0;
-                        foreach ($record as $r) { ?>
-                            <tr>
-                                <td><?= $no += 1; ?></td>
-                                <td><?= $r['nim']; ?></td>
-                                <td><?= $r['nama']; ?></td>
-                                <td><?= $r['tempat_lahir']; ?></td>
-                                <td><?= $r['tanggal_lahir']; ?></td>
-                                <td><?= $r['fakultas']; ?></td>
-                                <td><?= $r['jurusan']; ?></td>
-                                <td><?= $r['ipk']; ?></td>
-                            </tr>
-                        <?php  } ?>
-                    </table>
+                    <?php
+                    $no = 0;
+                    foreach ($record as $r) { ?>
+                        <tr>
+                            <td><?= $no += 1; ?></td>
+                            <td><?= $r['nim']; ?></td>
+                            <td><?= $r['nama']; ?></td>
+                            <td><?= $r['tempat_lahir']; ?></td>
+                            <td><?= $r['tanggal_lahir']; ?></td>
+                            <td><?= $r['fakultas']; ?></td>
+                            <td><?= $r['jurusan']; ?></td>
+                            <td><?= $r['ipk']; ?></td>
+                        </tr>
+                    <?php  } ?>
+                </table>
 
-                </div>
+            </div>
+            <div class="card-footer">
+                <center>Copyright &copy; <?= date("Y"); ?></center>
             </div>
         </div>
     </div>

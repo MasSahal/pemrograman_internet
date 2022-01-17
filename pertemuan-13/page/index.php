@@ -2,7 +2,6 @@
 define('ROOTPATH', __DIR__);
 
 //masukkan file koneksi ke databse
-// include('./db/db_connect.php');
 include('../db/connection.php');
 
 //periksa login
@@ -33,7 +32,6 @@ if (!isset($_SESSION['is_login'])) {
             <div class="container">
                 <h3 class="">Selamat Datang <span class="text-warning"> <?= $_SESSION['username']; ?> </span>di Aplikasi Terintegrasi MyKampus</h3>
                 <hr class="my-2">
-                <!-- <p>More info</p> -->
                 <p class="lead">
                 <div class="row text-center">
                     <div class="col-md-3">
@@ -60,13 +58,14 @@ if (!isset($_SESSION['is_login'])) {
                 </p>
             </div>
         </div>
+        <div class="bg-white pb-3">
+            <center>Copyright &copy; <?= date("Y"); ?></center>
+        </div>
     </div>
 </body>
 
 </html>
 <?php
-// bebaskan memory
-// mysqli_free_result($record);
 
 // tutup koneksi
 mysqli_close($mysqli);
