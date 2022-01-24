@@ -10,8 +10,8 @@ if (!isset($_SESSION['nama'])) {
 };
 
 //buat pesan
-if (isset($_GET['pesan'])) {
-    $pesan = $_GET['pesan'];
+if (isset($_GET['msg'])) {
+    $pesan = $_GET['msg'];
 }
 
 //Panggil file koneksi ke database
@@ -152,7 +152,7 @@ if (isset($_POST['submit'])) {
             <div class="nav navbar-nav">
                 <a class="nav-item nav-link active" href="./tampil_mahasiswa.php">Mahasiswa</a>
                 <a class="nav-item nav-link" href="./tampil_admin.php">Admin</a>
-                <a class="nav-item nav-link" href="./logout.php">Log-Out</a>
+                <a class="nav-item nav-link" onclick="return confirm('Yakin ingin keluar?')" href="./logout.php">Log-Out</a>
             </div>
         </nav>
         <div class="card mb-5">

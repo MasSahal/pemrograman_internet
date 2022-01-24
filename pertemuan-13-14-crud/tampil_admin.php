@@ -4,7 +4,7 @@
 session_start();
 
 //periksa apakah user sudah login ditandai dengan adanya session nama -> $_SESSION['nama']
-// jika tidak ada maka akan dikembalikan ke halaman login
+// jika tusernameak ada maka akan dikembalikan ke halaman login
 if (!isset($_SESSION['nama'])) {
     header("location:./login.php");
 };
@@ -27,14 +27,8 @@ if (isset($_GET["cari"])) {
     $cari = mysqli_real_escape_string($link, $cari);
 
     //buat query pencarian
-    $query  = "SELECT * FROM mahasiswa WHERE ";
-    $query .= "nim LIKE '%$cari%' OR ";
+    $query  = "SELECT * FROM admin WHERE ";
     $query .= "nama LIKE '%$cari%' OR ";
-    $query .= "tempat_lahir LIKE '%$cari%' OR ";
-    $query .= "tanggal_lahir LIKE '%$cari%' OR ";
-    $query .= "fakultas LIKE '%$cari%' OR ";
-    $query .= "jurusan LIKE '%$cari%' OR ";
-    $query .= "ipk LIKE '%$cari%'";
 
     //buat pesan
     $pesan = "Menampilkan Hasil Pencarian <b>$cari</b>";
@@ -42,23 +36,23 @@ if (isset($_GET["cari"])) {
 } else {
     //bukan dari pencarian
     //mengambil seluruh data di table mahasiswa
-    $query = "SELECT * FROM mahasiswa ORDER BY nama ASC";
+    $query = "SELECT * FROM admin ORDER BY username ASC";
 
     //buat pesan
-    $pesan = "Menampilkan Seluruh Data Mahasiswa";
+    $pesan = "Menampilkan Seluruh Data Admin";
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="username">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="wusernameth=device-wusernameth, initial-scale=1.0">
     <link rel="shortcut icon" href="./favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="bootstrap.css">
-    <title>Kampusku - Data Mahasiswa</title>
+    <title>Kampusku - Data Admin</title>
 </head>
 
 <body class="bg-dark">
@@ -67,7 +61,7 @@ if (isset($_GET["cari"])) {
             <div class="nav navbar-nav">
                 <a class="nav-item nav-link active" href="./tampil_mahasiswa.php">Mahasiswa</a>
                 <a class="nav-item nav-link" href="./tampil_admin.php">Admin</a>
-                <a class="nav-item nav-link" href="./logout.php" onclick="return confirm('Yakin ingin keluar?')">Log-Out</a>
+                <a class="nav-item nav-link" href="./logout.php">Log-Out</a>
             </div>
         </nav>
         <div class="card">
@@ -75,29 +69,27 @@ if (isset($_GET["cari"])) {
                 <div class="row mt-3 mb-4">
                     <div class="col-12 text-center">
                         <h4><?= $pesan; ?></h4>
-                        <?= $_SESSION['nama']; ?>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-md-8 col-sm-12">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="./tambah_mahasiswa.php" class="btn btn-success btn-sm">Tambah</a>
-                            <a href="./generate_page.php" class="btn btn-info btn-sm" onclick="return confirm('Yakin ingin generate seluruh data?')">Generate Data</a>
-                            <a href="./hapus_semua_mahasiswa.php" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus seluruh data?')">Hapus Semua</a>
-                            <a href="./tampil_mahasiswa.php" class="btn btn-warning btn-sm">Refresh</a>
+                            <a href="./tambah_admin.php" class="btn btn-success btn-sm">Tambah</a>
+                            <a href="./hapus_semua_admin.php" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus seluruh data?')">Hapus Semua</a>
+                            <a href="./tampil_admin.php" class="btn btn-warning btn-sm">Refresh</a>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12">
                         <form method="get">
                             <div class="form-group">
-                                <input type="search" name="cari" id="cari" class="form-control form-control-sm border-1" placeholder="Cari data ...">
+                                <input type="search" name="cari" username="cari" class="form-control form-control-sm border-1" placeholder="Cari data ...">
                             </div>
                         </form>
                     </div>
                 </div>
 
                 <?php if (isset($msg)) { ?>
-                    <div class="alert alert-success p-2 mb-2" role="alert">
+                    <div class="alert alert-success p-2 my-2" role="alert">
                         <?= $msg; ?>
                     </div>
                 <?php }; ?>
@@ -107,13 +99,8 @@ if (isset($_GET["cari"])) {
                         <thead class="bg-dark text-white">
                             <tr>
                                 <th>#</th>
-                                <th>NIM</th>
                                 <th>Nama</th>
-                                <th>Tempat Lahir</th>
-                                <th>Tanggal lahir</th>
-                                <th>Fakultas</th>
-                                <th>Jurusan</th>
-                                <th>IPK</th>
+                                <th>Passowrd Hash</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -126,16 +113,15 @@ if (isset($_GET["cari"])) {
                         foreach ($result as $data) { ?>
                             <tr>
                                 <td><?= $no += 1; ?></td>
-                                <td><?= $data['nim']; ?></td>
-                                <td><?= $data['nama']; ?></td>
-                                <td><?= $data['tempat_lahir']; ?></td>
-                                <td><?= $data['tanggal_lahir']; ?></td>
-                                <td><?= $data['fakultas']; ?></td>
-                                <td><?= $data['jurusan']; ?></td>
-                                <td><?= $data['ipk']; ?></td>
+                                <td><?= $data['username']; ?></td>
                                 <td>
-                                    <a class="btn btn-warning btn-xs" href="./edit_mahasiswa.php?nim=<?= $data['nim']; ?>">Edit</a>
-                                    <a class="btn btn-danger btn-xs" onclick="return confirm('Yakin ingin menghapus mahasiswa <?= $data['nama']; ?>?')" href="./hapus_mahasiswa.php?nim=<?= $data['nim']; ?>">Hapus</a>
+                                    <!-- <input type="password" class="form-control form-control-sm" value="" username="" readonly> -->
+                                    <?= $data['password']; ?>
+                                </td>
+                                <td>
+                                    <a class="btn btn-info btn-xs" href="./edit_password_admin.php?id=<?= $data['id']; ?>">Change Password</a>
+                                    <a class="btn btn-warning btn-xs" href="./edit_admin.php?id=<?= $data['id']; ?>">Edit</a>
+                                    <a class="btn btn-danger btn-xs" onclick="return confirm('Yakin ingin menghapus admin <?= $data['username']; ?>?')" href="./hapus_admin.php?id=<?= $data['id']; ?>">Hapus</a>
                                 </td>
                             </tr>
                         <?php  }

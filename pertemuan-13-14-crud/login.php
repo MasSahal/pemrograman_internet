@@ -1,7 +1,7 @@
 <?php
 //ambil pesan jika ada
-if (isset($_GET['pesan'])) {
-    $pesan = $_GET['pesan'];
+if (isset($_GET['msg'])) {
+    $pesan = $_GET['msg'];
 }
 
 //cek apakah form telah di submit
@@ -38,7 +38,6 @@ if (isset($_POST['submit'])) {  //submit berasal dari name
     $query = "SELECT * FROM admin WHERE username='$username' AND password='$password_hash'";
 
     $result = mysqli_query($link, $query);
-    var_dump(mysqli_num_rows($result));
     if (mysqli_num_rows($result) == 0) {
         #
         //jika data ada 0 di table
@@ -101,7 +100,7 @@ if (isset($_POST['submit'])) {  //submit berasal dari name
 
                 <!-- Tampilkan pesan error jika ada  -->
                 <?php if ($pesan_error !== "") { ?>
-                    <div class="alert alert-primary" role="alert">
+                    <div class="alert alert-danger" role="alert">
                         <?= $pesan_error; ?>
                     </div>
                 <?php }; ?>

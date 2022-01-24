@@ -97,7 +97,7 @@ if (!$result) {
 
 
 //query untuk membuat table admin
-$query = "CREATE TABLE admin( username VARCHAR(50), password VARCHAR(40))";
+$query = "CREATE TABLE admin( id INT(11) AUTO_INCREMENT, username VARCHAR(50), password VARCHAR(40), PRIMARY KEY(id))";
 $result = mysqli_query($link, $query);
 if (!$result) {
     #
@@ -112,7 +112,7 @@ if (!$result) {
 $username = "admin";
 $password = sha1("admin123"); //menggunakan hash enskripsi metode sha1
 
-$query = "INSERT INTO admin VALUES('$username','$password')";
+$query = "INSERT INTO admin VALUES('1','$username','$password')";
 $result = mysqli_query($link, $query);
 if (!$result) {
     #
@@ -127,5 +127,20 @@ if (!$result) {
 //tutup koneksi ke database
 mysqli_close($link);
 
-//return redirect
-header("location:./tampil_mahasiswa.php");
+//buat pesan
+$pesan = "Generate data telah berhasil!";
+$pesan = urlencode($pesan);
+
+
+//jalankan session
+session_start();
+
+//periksa apakah user sudah login ditandai dengan adanya session nama -> $_SESSION['nama']
+// jika tidak ada maka akan dikembalikan ke halaman login, jika sudah maka ke halaman tampil mahasiswa
+if (!isset($_SESSION['nama'])) {
+    header("location:./login.php?msg=$pesan");
+    #
+} else {
+    //return redirect
+    header("location:./tampil_mahasiswa.php?msg=$pesan");
+}
