@@ -103,8 +103,8 @@ if (isset($_POST['submit'])) {
     <div class="container">
         <nav class="navbar navbar-expand navbar-light bg-light p-3">
             <div class="nav navbar-nav">
-                <a class="nav-item nav-link active" href="./tampil_mahasiswa.php">Mahasiswa</a>
-                <a class="nav-item nav-link" href="./tampil_admin.php">Admin</a>
+                <a class="nav-item nav-link" href="./tampil_mahasiswa.php">Mahasiswa</a>
+                <a class="nav-item nav-link active" href="./tampil_admin.php">Admin</a>
                 <a class="nav-item nav-link" onclick="return confirm('Yakin ingin keluar?')" href="./logout.php">Log-Out</a>
             </div>
         </nav>

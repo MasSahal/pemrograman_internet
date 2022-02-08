@@ -75,7 +75,6 @@ if (isset($_GET["cari"])) {
                 <div class="row mt-3 mb-4">
                     <div class="col-12 text-center">
                         <h4><?= $pesan; ?></h4>
-                        <?= $_SESSION['nama']; ?>
                     </div>
                 </div>
                 <div class="row mb-2">

@@ -116,7 +116,7 @@ if (isset($_POST['submit'])) {
             $pesan = "Mahasiswa dengan nama $nama telah berhasil di tambahkan!";
 
             //redirect ke halaman tampil mahasiswa
-            header("location:tampil_mahasiswa.php?pesan=$pesan");
+            header("location:tampil_mahasiswa.php?msg=$pesan");
         } else {
             die("Data mahasiswa $nama tidak berhasil di tambahkan : err - " . mysqli_errno($link) . " - " . mysqli_error($link));
         }
