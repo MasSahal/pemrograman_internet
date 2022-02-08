@@ -130,8 +130,8 @@ if (isset($_GET["cari"])) {
                                                         <?= $data['password']; ?>
                                                     </td>
                                                     <td>
-                                                        <a class="btn btn-info btn-sm" href="./edit_password_admin.php?id=<?= $data['id']; ?>">Change Password</a>
-                                                        <a class="btn btn-warning btn-sm" href="./edit_admin.php?id=<?= $data['id']; ?>">Edit</a>
+                                                        <a class="btn btn-info btn-sm" href="./editpwadministrator.php?id=<?= $data['id']; ?>">Change Password</a>
+                                                        <a class="btn btn-warning btn-sm" href="./editadministrator.php?id=<?= $data['id']; ?>">Edit</a>
                                                         <a class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus admin <?= $data['username']; ?>?')" href="./hapus_admin.php?id=<?= $data['id']; ?>">Hapus</a>
                                                     </td>
                                                 </tr>

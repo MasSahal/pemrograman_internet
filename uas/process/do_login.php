@@ -5,7 +5,7 @@ if (isset($_GET['msg'])) {
 }
 
 //cek apakah form telah di submit
-if (isset($_POST['submit'])) {  //submit berasal dari name
+if (isset($_POST['submit'])) {
 
     //ambil data yang di imput dalam form
     $username = htmlentities(strip_tags(trim($_POST['username'])));
@@ -14,34 +14,32 @@ if (isset($_POST['submit'])) {  //submit berasal dari name
     // siapkan variabel untuk menampung pesan error
     $pesan_error = "";
 
-    //cek apakah username telah di isi apa tidak
     if (empty($username)) {
         $pesan_error .= "Username harus diisi! <br>";
     }
 
-    //cek apakah password telah di isi apa tidak
     if (empty($password)) {
         $pesan_error .= "Password harus diisi! <br>";
     }
 
-    //Panggil file koneksi ke database
     include("./connection.php");
 
     //filter data input dengan mysqli real escape
     $username = mysqli_real_escape_string($link, $username);
     $password = mysqli_real_escape_string($link, $password);
 
-    //generate hash password dengan sha1
-    $password_hash = sha1($password);
-
-    //cek apakah username dan password ada di table admin
-    $query = "SELECT * FROM admin WHERE username='$username' AND password='$password_hash'";
+    //cek data
+    $query = "SELECT * FROM admin WHERE username='$username'";
 
     $result = mysqli_query($link, $query);
     if (!$result) {
-        #
-        //jika data ada 0 di table
-        $pesan_error .= "Username dan/atau Password tidak sesuai! <br>";
+        $pesan_error .= "Username tidak sesuai! <br>";
+    } else {
+        $data = mysqli_fetch_assoc($result);
+        $verif = password_verify($password, $data['password']);
+        if (!$verif) {
+            $pesan_error .= "Password tidak sesuai! <br>";
+        }
     }
 
     //bebaskan memory

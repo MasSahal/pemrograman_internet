@@ -3,15 +3,13 @@
 //jalankan session
 session_start();
 
-//periksa apakah user sudah login ditandai dengan adanya session nama -> $_SESSION['nama']
-// jika tidak ada maka akan dikembalikan ke halaman login
 if (!isset($_SESSION['nama'])) {
     header("location:./login.php");
 };
 
 //buat pesan
 if (isset($_GET['msg'])) {
-    $msg = $_GET['msg'];
+    $pesan = $_GET['msg'];
 }
 
 //Panggil file koneksi ke database
@@ -20,57 +18,71 @@ include("./connection.php");
 //periksa apakah form telah di submit
 if (isset($_POST['submit'])) {
 
-    $username = htmlentities(strip_tags(trim($_POST['username'])));
+    $id       = htmlentities(strip_tags(trim($_POST['id'])));
     $password = htmlentities(strip_tags(trim($_POST['password'])));
+    $password2 = htmlentities(strip_tags(trim($_POST['password2'])));
+
 
     $pesan_error = "";
-
-    if (empty($username)) {
-        #
-        $pesan_error .= "Username harus diisi! <br>";
-    }
 
     if (empty($password)) {
         #
         $pesan_error .= "Password harus diisi! <br>";
     }
 
-    //filter data
-    $username = mysqli_real_escape_string($link, $username);
-    $result = mysqli_query($link, "SELECT * FROM admin WHERE username='$username'");
+    if (empty($password2)) {
+        #
+        $pesan_error .= "Ulangi password harus diisi! <br>";
+    }
 
-    //cek apakah ada data nim yang sama di database
-    $data_admin = mysqli_num_rows($result);
-    if ($data_admin >= 1) {
-        $pesan_error .= "Username yang sama sudah digunakan oleh akun admin lain! <br>";
+    //filter data
+    $id = mysqli_real_escape_string($link, $id);
+    $password = mysqli_real_escape_string($link, $password);
+    $password2 = mysqli_real_escape_string($link, $password2);
+
+    //cek apakah passworddengan password2 tidak sama
+    if ($password != $password2) {
+        #
+        $pesan_error .= "Password tidak sama! <br>";
     }
 
     if ($pesan_error === "") {
 
-        $username = mysqli_real_escape_string($link, $username);
         $password = mysqli_real_escape_string($link, $password);
 
-        $password_sha1 = password_hash($password, PASSWORD_BCRYPT);
+        //hash password
+        $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
         //buat query insert
-        $query = "INSERT INTO admin (username, password) VALUES ('$username','$password_sha1')";
+        $query = "UPDATE admin SET password='$password_hash' WHERE id='$id'";
 
         //eksekusi data
         $result = mysqli_query($link, $query);
+
+        //periksa data apakah sudah berhasil : true
         if ($result) {
-            $pesan = "Admin dengan username $username telah berhasil di tambahkan!";
-            $pesan = urlencode($pesan);
-            header("location:administrator.php?msg=$pesan");
+            $pesan = "Admin dengan password $password telah berhasil diperbarui!";
+
+            //redirect ke halaman tampil password
+            header("location:administrator.php?pesan=$pesan");
         } else {
-            die("Data username $username tidak berhasil di tambahkan : err - " . mysqli_errno($link) . " - " . mysqli_error($link));
+            die("Data password $password tidak berhasil diperbarui : err - " . mysqli_errno($link) . " - " . mysqli_error($link));
         }
     }
 } else {
+    $id = htmlentities(strip_tags(trim($_GET['id'])));
+    $id = mysqli_real_escape_string($link, $id);
 
-    //siapkan variabel sebagai default
+    //pilih data untuk dapet nama
+    $result = mysqli_query($link, "SELECT * FROM admin WHERE id='$id'");
+    $result = mysqli_fetch_assoc($result);
+
     $pesan_error = "";
-    $username = "";
+
+    $id = $result['id'];
+
     $password = "";
+    $password2 = "";
 }
 ?>
 <!DOCTYPE html>
@@ -115,45 +127,43 @@ if (isset($_POST['submit'])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Tambah Data Administrator</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Edit Password Administrator</h1>
                     </div>
 
                     <div class="row">
                         <div class="col-md-12">
-                            <?php if (isset($msg)) { ?>
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?php if ($pesan_error !== "") { ?>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                         <span class="sr-only">Close</span>
                                     </button>
-                                    <span><?= $msg; ?>!</span>
+                                    <span><?= $pesan_error; ?></span>
                                 </div>
                             <?php }; ?>
                             <div class="card border-left-success shadow">
-                                <form action="./addadministrator.php" method="post">
+                                <form action="./editpwadministrator.php" method="post">
                                     <div class="card-body">
+                                        <h4 class="text-center mt-3 mb-4">Form Edit Password Administrator</h4>
+
                                         <div class="row">
-                                            <div class="col-12">
-                                                <h4 class="text-center mt-3 mb-4">Form Tambah Administrator</h4>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mb-3">
-                                                            <label for="username">Username</label>
-                                                            <input type="text" name="username" id="username" class="form-control border-1 " placeholder="Masukan username..." value="<?= $username; ?>">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mb-3">
-                                                            <label for="password">Password</label>
-                                                            <input type="password" name="password" id="password" class="form-control border-1 " placeholder="Masukan password..." value="<?= $password; ?>">
-                                                        </div>
-                                                    </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label for="password">Password</label>
+                                                    <input type="password" name="password" id="password" class="form-control border-1 " placeholder="Masukan password..." value="<?= $password; ?>">
+                                                    <input type="hidden" name="id" id="id" value="<?= $id; ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label for="password2">Ulangi Password</label>
+                                                    <input type="password" name="password2" id="password2" class="form-control border-1 " placeholder="Ulangi password..." value="<?= $password2; ?>">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="submit" name="submit" class="btn btn-success px-3 float-end">Tambahkan</button>
+                                        <button type="submit" name="submit" class="btn btn-primary px-3 float-end">Simpan Perubahan</button>
                                     </div>
                                 </form>
                             </div>

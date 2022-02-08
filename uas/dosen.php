@@ -25,7 +25,7 @@ if (isset($_GET["cari"])) {
     $query .= "nip LIKE '%$cari%' OR ";
     $query .= "nama LIKE '%$cari%' OR ";
     $query .= "telepon LIKE '%$cari%' OR ";
-    $query .= "email LIKE '%$cari%' OR ";
+    $query .= "email LIKE '%$cari%'";
 
     //buat pesan
     $pesan = "Menampilkan Hasil Pencarian <b>$cari</b>";
@@ -33,8 +33,7 @@ if (isset($_GET["cari"])) {
 } else {
 
     $query = "SELECT * FROM dosen ORDER BY nama ASC";
-    $cari = "";
-    $pesan = "Tabel Data Seluruh dosen";
+    $pesan = "Tabel Data Seluruh Dosen";
 }
 ?>
 <!DOCTYPE html>

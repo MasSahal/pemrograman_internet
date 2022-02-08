@@ -222,10 +222,14 @@ if (isset($_POST['submit'])) {
                         <div class="col-md-12">
 
                             <?php if ($pesan_error !== "") { ?>
-                                <div class="alert alert-danger" role="alert">
-                                    <?= $pesan_error; ?>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only">Close</span>
+                                    </button>
+                                    <span><?= $pesan_error; ?></span>
                                 </div>
-                            <?php } ?>
+                            <?php }; ?>
 
                             <div class="card border-left-primary shadow">
                                 <form action="addmahasiswa.php" method="post" enctype="multipart/form-data">

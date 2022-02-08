@@ -56,22 +56,21 @@ if (isset($_POST['submit'])) {
 
     if ($pesan_error === "") {
 
-        $nip = mysqli_real_escape_string($link, $nip);
-        $nama = mysqli_real_escape_string($link, $nama);
-        $telepon = mysqli_real_escape_string($link, $telepon);
-        $email = mysqli_real_escape_string($link, $email);
-        $alamat = mysqli_real_escape_string($link, $alamat);
+        $nip        = mysqli_real_escape_string($link, $nip);
+        $nama       = mysqli_real_escape_string($link, $nama);
+        $telepon    = mysqli_real_escape_string($link, $telepon);
+        $email      = mysqli_real_escape_string($link, $email);
+        $alamat     = mysqli_real_escape_string($link, $alamat);
 
-        $query = "INSERT INTO dosen VALUES ('$nip','$nama','$telepon','$email','$alamat')";
+        $query  = "UPDATE dosen SET nip='$nip', nama='$nama', telepon='$telepon', email='$email', alamat='$alamat' WHERE nip='$nip'";
         $result = mysqli_query($link, $query);
 
         if ($result) {
-            $pesan = "Dosen $username telah berhasil di tambahkan!";
-
-            //redirect ke halaman tampil username
+            $pesan = "Dosen $username telah berhasil diperbarui!";
+            $pesan = urlencode($pesan);
             header("location:dosen.php?msg=$pesan");
         } else {
-            die("Dosen $username tidak berhasil di tambahkan : err - " . mysqli_errno($link) . " - " . mysqli_error($link));
+            die("Dosen $username tidak berhasil diperbarui : err - " . mysqli_errno($link) . " - " . mysqli_error($link));
         }
     }
 } else {
@@ -158,7 +157,7 @@ if (isset($_POST['submit'])) {
                                                     <div class="col-md-6">
                                                         <div class="form-group mb-3">
                                                             <label for="nip">NIP</label>
-                                                            <input type="number" min="0" name="nip" id="nip" class="form-control border-1 " placeholder="Masukan nip..." value="<?= $nip; ?>">
+                                                            <input type="number" min="0" name="nip" id="nip" class="form-control border-1 " readonly value="<?= $nip; ?>">
                                                         </div>
                                                         <div class="form-group mb-3">
                                                             <label for="nama">Nama</label>

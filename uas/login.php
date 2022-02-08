@@ -25,7 +25,6 @@
 <body class="bg-gradient-dark">
 
     <div class="container">
-
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
