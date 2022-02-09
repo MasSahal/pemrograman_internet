@@ -1,7 +1,11 @@
 <?php
 
 session_start();
-include('./connection.php')
+include('./connection.php');
+
+if (!isset($_SESSION['nama'])) {
+    header("location:./login.php");
+};
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,11 +26,8 @@ include('./connection.php')
 </head>
 
 <body id="page-top">
-
-    <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
         <?php include('./template/sidebar.php'); ?>
         <!-- End of Sidebar -->
 
@@ -120,10 +121,7 @@ include('./connection.php')
                 <!-- End of Footer -->
 
             </div>
-            <!-- End of Content Wrapper -->
-
         </div>
-        <!-- End of Page Wrapper -->
 
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">

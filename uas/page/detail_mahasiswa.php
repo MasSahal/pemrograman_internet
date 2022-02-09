@@ -8,8 +8,6 @@
                 <div class="row">
                     <div class="col-md-4">
                         <img src="./img/<?= $data['foto']; ?>" class="img-fluid" alt="">
-                        <br>
-                        <a name="" id="" class="btn btn-warning btn-sm mt-2" href="#" role="button">Ganti Foto</a>
                     </div>
                     <div class="col-md-8">
                         <table class="table table-borderless w-75">

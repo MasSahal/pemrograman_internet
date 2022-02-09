@@ -66,7 +66,6 @@ if (isset($_GET["cari"])) {
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
             <div id="content">
 
                 <!-- Topbar -->
@@ -97,7 +96,7 @@ if (isset($_GET["cari"])) {
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="card border-left-info shadow">
+                            <div class="card border-left-secondary shadow">
                                 <div class="card-header">
                                     <div class="m-0 font-weight-bold text-primary"><?= $pesan; ?></div>
                                 </div>
@@ -153,17 +152,12 @@ if (isset($_GET["cari"])) {
                     </div>
                 </div>
 
-                <!-- End of Main Content -->
-
                 <!-- Footer -->
                 <?php include('./template/footer.php'); ?>
                 <!-- End of Footer -->
 
             </div>
-            <!-- End of Content Wrapper -->
-
         </div>
-        <!-- End of Page Wrapper -->
 
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">

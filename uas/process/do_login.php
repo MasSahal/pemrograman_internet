@@ -32,14 +32,15 @@ if (isset($_POST['submit'])) {
     $query = "SELECT * FROM admin WHERE username='$username'";
 
     $result = mysqli_query($link, $query);
-    if (!$result) {
-        $pesan_error .= "Username tidak sesuai! <br>";
-    } else {
+    if (mysqli_num_rows($result) > 0) {
         $data = mysqli_fetch_assoc($result);
         $verif = password_verify($password, $data['password']);
+        var_dump($verif);
         if (!$verif) {
             $pesan_error .= "Password tidak sesuai! <br>";
         }
+    } else {
+        $pesan_error .= "Username tidak sesuai! <br>";
     }
 
     //bebaskan memory

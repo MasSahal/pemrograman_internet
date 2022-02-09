@@ -3,8 +3,6 @@
 //jalankan session
 session_start();
 
-//periksa apakah user sudah login ditandai dengan adanya session nama -> $_SESSION['nama']
-// jika tidak ada maka akan dikembalikan ke halaman login
 if (!isset($_SESSION['nama'])) {
     header("location:./login.php");
 };
@@ -14,10 +12,9 @@ if (isset($_GET['msg'])) {
     $msg = $_GET['msg'];
 }
 
-//Panggil file koneksi ke database
+//Panggil file koneksi
 include("./connection.php");
 
-//periksa apakah form telah di submit
 if (isset($_POST['submit'])) {
 
     $username = htmlentities(strip_tags(trim($_POST['username'])));
@@ -58,8 +55,7 @@ if (isset($_POST['submit'])) {
         //eksekusi data
         $result = mysqli_query($link, $query);
         if ($result) {
-            $pesan = "Admin dengan username $username telah berhasil di tambahkan!";
-            $pesan = urlencode($pesan);
+            $pesan = urlencode("Admin dengan username $username telah berhasil di tambahkan!");
             header("location:administrator.php?msg=$pesan");
         } else {
             die("Data username $username tidak berhasil di tambahkan : err - " . mysqli_errno($link) . " - " . mysqli_error($link));

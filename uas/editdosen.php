@@ -133,7 +133,7 @@ if (isset($_POST['submit'])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Tambah Data Dosen</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Edit Data Dosen</h1>
                     </div>
 
                     <div class="row">
@@ -144,7 +144,7 @@ if (isset($_POST['submit'])) {
                                         <span aria-hidden="true">&times;</span>
                                         <span class="sr-only">Close</span>
                                     </button>
-                                    <span><?= $msg; ?>!</span>
+                                    <span><?= $msg; ?></span>
                                 </div>
                             <?php }; ?>
                             <div class="card border-left-success shadow">
@@ -152,7 +152,7 @@ if (isset($_POST['submit'])) {
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12">
-                                                <h4 class="text-center mt-3 mb-4">Form Tambah Dosen</h4>
+                                                <h4 class="text-center mt-3 mb-4">Form Edit Dosen</h4>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group mb-3">
@@ -183,7 +183,7 @@ if (isset($_POST['submit'])) {
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="submit" name="submit" class="btn btn-success px-3 float-end">Tambahkan</button>
+                                        <button type="submit" name="submit" class="btn btn-success px-3 float-end">Simpan Perubahan</button>
                                     </div>
                                 </form>
                             </div>

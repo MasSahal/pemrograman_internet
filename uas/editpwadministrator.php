@@ -1,6 +1,5 @@
 <?php
 
-//jalankan session
 session_start();
 
 if (!isset($_SESSION['nama'])) {
@@ -12,15 +11,14 @@ if (isset($_GET['msg'])) {
     $pesan = $_GET['msg'];
 }
 
-//Panggil file koneksi ke database
 include("./connection.php");
 
-//periksa apakah form telah di submit
 if (isset($_POST['submit'])) {
 
     $id       = htmlentities(strip_tags(trim($_POST['id'])));
     $password = htmlentities(strip_tags(trim($_POST['password'])));
     $password2 = htmlentities(strip_tags(trim($_POST['password2'])));
+    $username = htmlentities(strip_tags(trim($_POST['username'])));
 
 
     $pesan_error = "";
@@ -59,14 +57,14 @@ if (isset($_POST['submit'])) {
         //eksekusi data
         $result = mysqli_query($link, $query);
 
-        //periksa data apakah sudah berhasil : true
         if ($result) {
-            $pesan = "Admin dengan password $password telah berhasil diperbarui!";
+            $nama = $data['username'];
+            $pesan  = urlencode("Password $username telah berhasil diperbarui!");
 
             //redirect ke halaman tampil password
             header("location:administrator.php?pesan=$pesan");
         } else {
-            die("Data password $password tidak berhasil diperbarui : err - " . mysqli_errno($link) . " - " . mysqli_error($link));
+            die("Data password $username tidak berhasil diperbarui : err - " . mysqli_errno($link) . " - " . mysqli_error($link));
         }
     }
 } else {
@@ -80,6 +78,7 @@ if (isset($_POST['submit'])) {
     $pesan_error = "";
 
     $id = $result['id'];
+    $username = $result['username'];
 
     $password = "";
     $password2 = "";
@@ -152,6 +151,7 @@ if (isset($_POST['submit'])) {
                                                     <label for="password">Password</label>
                                                     <input type="password" name="password" id="password" class="form-control border-1 " placeholder="Masukan password..." value="<?= $password; ?>">
                                                     <input type="hidden" name="id" id="id" value="<?= $id; ?>">
+                                                    <input type="hidden" name="username" id="username" value="<?= $username; ?>">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

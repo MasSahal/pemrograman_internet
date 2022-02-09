@@ -66,12 +66,11 @@ if (isset($_POST['submit'])) {
         $result = mysqli_query($link, $query);
 
         if ($result) {
-            $pesan = "Dosen $username telah berhasil di tambahkan!";
+            $pesan = urlencode("Dosen $nama telah berhasil di tambahkan!");
 
-            //redirect ke halaman tampil username
             header("location:dosen.php?msg=$pesan");
         } else {
-            die("Dosen $username tidak berhasil di tambahkan : err - " . mysqli_errno($link) . " - " . mysqli_error($link));
+            die("Dosen $nama tidak berhasil di tambahkan : err - " . mysqli_errno($link) . " - " . mysqli_error($link));
         }
     }
 } else {

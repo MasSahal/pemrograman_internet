@@ -3,27 +3,22 @@
 //jalankan session
 session_start();
 
-//periksa apakah user sudah login ditandai dengan adanya session nama -> $_SESSION['nama']
-// jika tusernameak ada maka akan dikembalikan ke halaman login
 if (!isset($_SESSION['nama'])) {
     header("location:./login.php");
 };
 
 //buat pesan
-if (isset($_GET['msg'])) {
-    $msg = $_GET['msg'];
+if (isset($_GET['pesan'])) {
+    $msg = $_GET['pesan'];
 }
 
 //Panggil file koneksi ke database
 include("./connection.php");
 
-//cek apakah form untuk pencarian telah di submit
 if (isset($_GET["cari"])) {
 
-    //ambil data input dari form
     $cari = htmlentities(strip_tags(trim($_GET['cari'])));
 
-    //filter untuk mencegah sql injection
     $cari = mysqli_real_escape_string($link, $cari);
 
     //buat query pencarian
@@ -34,12 +29,10 @@ if (isset($_GET["cari"])) {
     $pesan = "Menampilkan Hasil Pencarian <b>$cari</b>";
     #
 } else {
-    //bukan dari pencarian
-    //mengambil seluruh data di table mahasiswa
     $query = "SELECT * FROM admin ORDER BY username ASC";
 
     //buat pesan
-    $pesan = "Menampilkan Seluruh Data Administrator";
+    $pesan = "Tabel Data Seluruh Administrator";
 }
 ?>
 
@@ -105,7 +98,7 @@ if (isset($_GET["cari"])) {
                                 </div>
                                 <div class="card-body">
                                     <a name="" id="" class="btn btn-success btn-sm mb-3" href="addadministrator.php" role="button">Tambah Administrator</a>
-                                    <a name="" id="" class="btn btn-info btn-sm mb-3" href="dosen.php" role="button">Refresh</a>
+                                    <a name="" id="" class="btn btn-info btn-sm mb-3" href="administrator.php" role="button">Refresh</a>
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-stripped">
                                             <thead class="thead-light">
@@ -132,7 +125,7 @@ if (isset($_GET["cari"])) {
                                                     <td>
                                                         <a class="btn btn-info btn-sm" href="./editpwadministrator.php?id=<?= $data['id']; ?>">Change Password</a>
                                                         <a class="btn btn-warning btn-sm" href="./editadministrator.php?id=<?= $data['id']; ?>">Edit</a>
-                                                        <a class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus admin <?= $data['username']; ?>?')" href="./hapus_admin.php?id=<?= $data['id']; ?>">Hapus</a>
+                                                        <a class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus admin <?= $data['username']; ?>?')" href="./process/hapus_admin.php?id=<?= $data['id']; ?>">Hapus</a>
                                                     </td>
                                                 </tr>
                                             <?php  }

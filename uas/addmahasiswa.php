@@ -14,9 +14,6 @@ if (isset($_GET['msg'])) {
 
 //periksa apakah form telah di submit
 if (isset($_POST['submit'])) {
-
-    // include('./connection.php');
-    //buat variabel kosong fakultas
     $fakultas = "";
 
     //ambil data dari form input
@@ -32,7 +29,6 @@ if (isset($_POST['submit'])) {
 
     $pesan_error = "";
 
-    //cek apakah nim telah di isi apa tidak
     if (empty($nim)) {
         #
         $pesan_error .= "Field NIM harus diisi! <br>";
@@ -77,10 +73,11 @@ if (isset($_POST['submit'])) {
         $pesan_error .= "Field Foto harus diisi! <br>";
     }
 
-    //cek apakah ipk berupa angka dan tidak boleh negatif
     if (!is_numeric($ipk) or $ipk <= 0) {
         $pesan_error .= "IPK harus bernilai angka dan tidak negatif! <br>";
     }
+
+    $foto           = $_FILES['foto'];
 
     //jika gambar tida berhasil di upload
     $up_err = $foto['error'];
@@ -103,28 +100,24 @@ if (isset($_POST['submit'])) {
 
         //jika file sudah diupload
         if (file_exists($path_img)) {
-            $pesan_error .= "Gambar telah diupload sebelumnya!";
+            $pesan_error .= "Gambar telah diupload sebelumnya! <br>";
         }
     }
 
-    //cek gambar bila melebhi 1mb
-    $mb = 1048576;
+    //cek gambar bila melebhi 2mb
+    $mb = 2097152;
     if ($foto['size'] > $mb) {
-        $pesan_error .= "Gambar terlalu besar!";
+        $pesan_error .= "Gambar terlalu besar! <br>";
     }
 
     $gambar = $foto;
     $allowed = array('png', 'jpg', 'jpeg');
     $filename = $foto['name'];
-    $ext = pathinfo($filename, PATHINFO_EXTENSION);
-    // var_dump($ext);
-    // die();
+    $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
     if (!in_array($ext, $allowed)) {
-        $pesan_error .= "Silahkan masukan gambar yang benar (png, jpg, jpeg)!";
+        $pesan_error .= "Silahkan masukan gambar yang benar (png, jpg, jpeg)! <br>";
     }
 
-
-    //jika tidak ada pesan erro maka data akan di input ke database
     if ($pesan_error === "") {
 
         //filter semua data dengan mysqli real escape
@@ -148,8 +141,6 @@ if (isset($_POST['submit'])) {
 
         //eksekusi data
         $result = mysqli_query($link, $query);
-
-        //periksa data apakah sudah berhasil : true
         if ($result) {
             $pesan = "Mahasiswa dengan nama $nama telah berhasil di tambahkan!";
             $pesan = urlencode($pesan);
@@ -320,3 +311,9 @@ if (isset($_POST['submit'])) {
 </body>
 
 </html>
+
+<div class="form-group">
+    <label for="foto">Upload Foto</label>
+    <input type="file" class="form-control-file" name="foto" id="foto" placeholder="" aria-describedby="fileHelpId">
+    <small id="fileHelpId" class="form-text text-muted">Maks 2Mb, png, jpg, jpeg</small>
+</div>

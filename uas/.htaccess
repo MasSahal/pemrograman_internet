@@ -1,5 +1,5 @@
 #Alternate default index pages
-DirectoryIndex index.php tampil_mahasiswa.php
+DirectoryIndex login.php index.php
 
 <IfModule mod_rewrite.c>
 RewriteEngine on
